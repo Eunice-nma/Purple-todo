@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
-import 'package:todo_sample_app/core/widgets/app_modal.dart';
 import 'package:todo_sample_app/core/widgets/button.dart';
 import 'package:todo_sample_app/core/widgets/text_field.dart';
-import 'package:todo_sample_app/features/todos/presentation/widgets/group_modal.dart';
-import 'package:todo_sample_app/features/todos/presentation/widgets/group_tag.dart';
+import 'package:todo_sample_app/features/groups/presentation/widgets/group_tag.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_sample_app/features/todos/data/models/todo_model.dart';
-import 'package:todo_sample_app/features/todos/providers.dart';
+import 'package:todo_sample_app/features/groups/data/models/todo_model.dart';
+import 'package:todo_sample_app/features/groups/providers.dart';
 
 /// Bottom sheet widget for adding or editing a Todo item.
 class TodoBottomSheet extends ConsumerStatefulWidget {
-  const TodoBottomSheet({this.todo, super.key});
+  const TodoBottomSheet({this.todo, this.predefinedGroupId, super.key});
   final Todo? todo; // If not null, this is an edit operation.
+  final String? predefinedGroupId;
 
   @override
   ConsumerState<TodoBottomSheet> createState() => _TodoBottomSheetState();
@@ -40,6 +39,8 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
       selectedGroupId = currentTodo!.groupId;
       setReminder = currentTodo!.reminderTime != null;
       selectedTime = currentTodo!.reminderTime;
+    } else {
+      selectedGroupId = widget.predefinedGroupId;
     }
   }
 
@@ -146,17 +147,17 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
           Row(
             children: [
               Text('Group Task', style: AppTextStyles.lable11w7),
-              const Spacer(),
-              InkWell(
-                onTap: () {
-                  // Show modal to add a new group.
-                  showAppDialog(
-                    context: context,
-                    child: GroupModal(),
-                  );
-                },
-                child: const Icon(Icons.add, color: AppColors.black31),
-              ),
+              // const Spacer(),
+              // InkWell(
+              //   onTap: () {
+              //     // Show modal to add a new group.
+              //     showAppDialog(
+              //       context: context,
+              //       child: GroupModal(),
+              //     );
+              //   },
+              //   child: const Icon(Icons.add, color: AppColors.black31),
+              // ),
             ],
           ),
           12.hi,

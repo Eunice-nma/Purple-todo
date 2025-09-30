@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/services/storage_service.dart';
-import 'package:todo_sample_app/features/todos/data/models/grouped_todo_model.dart';
+import 'package:todo_sample_app/features/groups/data/models/grouped_todo_model.dart';
 import 'dart:convert';
 
 /// StateNotifier to manage the list of groups

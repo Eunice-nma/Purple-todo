@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_sample_app/core/services/notification_service.dart';
 import 'package:todo_sample_app/core/theme/app_theme.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
-import 'package:todo_sample_app/features/Todo/presentation/screens/home_screen.dart';
 import 'package:todo_sample_app/features/home/home_page.dart';
 
 Future<void> main() async {

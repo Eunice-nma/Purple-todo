@@ -36,7 +36,7 @@ class GroupedTaskWidget extends StatelessWidget {
             children: [
               Text(
                 text,
-                style: AppTextStyles.heading27w6
+                style: AppTextStyles.heading20w6
                     .copyWith(color: AppColors.darkPurple),
               ),
               Text(

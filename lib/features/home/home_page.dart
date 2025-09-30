@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 
-import 'package:todo_sample_app/features/Todo/presentation/screens/home_screen.dart';
+import 'package:todo_sample_app/features/Todo/presentation/screens/todo_screen.dart';
+import 'package:todo_sample_app/features/groups/presentation/screens/group_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,23 +15,24 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    TodoScreen(), // Todos
-    Placeholder(), // Groups
-    Placeholder(), // Profile
+    TodoScreen(),
+    GroupScreen(),
+    Placeholder(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whitefe,
       body: _pages[_currentIndex],
       bottomNavigationBar: SizedBox(
         height: 100, // Adjust the height as needed
         child: BottomNavigationBar(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.whitefe,
           currentIndex: _currentIndex,
-          selectedItemColor: AppColors.purple69,
+          selectedItemColor: AppColors.purple,
           unselectedItemColor: Colors.grey,
+          unselectedLabelStyle: AppTextStyles.body13w5,
+          selectedLabelStyle: AppTextStyles.body13w6,
           onTap: (index) => setState(() => _currentIndex = index),
           items: const [
             BottomNavigationBarItem(
