@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 
-import 'package:todo_sample_app/features/Todo/presentation/screens/todo_screen.dart';
+import 'package:todo_sample_app/features/todo/presentation/screens/todo_screen.dart';
 import 'package:todo_sample_app/features/groups/presentation/screens/group_screen.dart';
 
 class HomePage extends StatefulWidget {

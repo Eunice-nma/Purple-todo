@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
 import 'package:todo_sample_app/core/widgets/app_bottom_sheet.dart';
-import 'package:todo_sample_app/features/groups/presentation/widgets/todo_bottom_sheet.dart';
-import 'package:todo_sample_app/features/groups/presentation/widgets/todo_item_widget.dart';
-import 'package:todo_sample_app/features/groups/providers.dart';
+import 'package:todo_sample_app/features/todo/presentation/widget/todo_bottom_sheet.dart';
+import 'package:todo_sample_app/features/todo/presentation/widget/todo_item_widget.dart';
+import 'package:todo_sample_app/features/providers.dart';
 
 // HomeScreen displays the main dashboard with tasks and groups
 class TodoScreen extends ConsumerWidget {

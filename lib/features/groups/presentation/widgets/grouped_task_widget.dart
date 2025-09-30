@@ -7,14 +7,12 @@ class GroupedTaskWidget extends StatelessWidget {
     required this.text,
     required this.subText,
     required this.bgColor,
-    // required this.progress,
     required this.totalTasks,
     this.completedTasks = 0,
   });
   final String text;
   final String subText;
   final Color bgColor;
-  // final double progress;
   final int totalTasks;
   final int completedTasks;
 

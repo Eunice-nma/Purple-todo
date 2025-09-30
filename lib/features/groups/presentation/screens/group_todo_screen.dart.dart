@@ -5,9 +5,9 @@ import 'package:todo_sample_app/core/utils/utils_exports.dart';
 import 'package:todo_sample_app/core/widgets/app_bottom_sheet.dart';
 import 'package:todo_sample_app/core/widgets/empty_state.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/grouped_task_widget.dart';
-import 'package:todo_sample_app/features/groups/presentation/widgets/todo_bottom_sheet.dart';
-import 'package:todo_sample_app/features/groups/providers.dart';
-import 'package:todo_sample_app/features/groups/presentation/widgets/todo_item_widget.dart';
+import 'package:todo_sample_app/features/todo/presentation/widget/todo_bottom_sheet.dart';
+import 'package:todo_sample_app/features/providers.dart';
+import 'package:todo_sample_app/features/todo/presentation/widget/todo_item_widget.dart';
 
 class TodoListScreen extends ConsumerWidget {
   const TodoListScreen(this.groupId, {super.key});

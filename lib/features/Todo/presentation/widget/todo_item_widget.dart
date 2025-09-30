@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
-import 'package:todo_sample_app/features/groups/data/models/todo_model.dart';
+import 'package:todo_sample_app/features/todo/models/todo_model.dart';
 
 class TodoItemWidget extends StatelessWidget {
   final Todo task;

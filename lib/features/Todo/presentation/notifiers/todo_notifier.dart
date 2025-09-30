@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/services/notification_service.dart';
 import 'package:todo_sample_app/core/services/storage_service.dart';
-import 'package:todo_sample_app/features/groups/data/models/todo_model.dart';
+import 'package:todo_sample_app/features/todo/models/todo_model.dart';
 
 // StateNotifier to manage the list of todos
 class TodoNotifier extends StateNotifier<List<Todo>> {

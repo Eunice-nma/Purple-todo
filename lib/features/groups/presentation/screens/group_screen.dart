@@ -6,7 +6,7 @@ import 'package:todo_sample_app/core/widgets/app_modal.dart';
 import 'package:todo_sample_app/features/groups/presentation/screens/group_todo_screen.dart.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/group_modal.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/grouped_task_widget.dart';
-import 'package:todo_sample_app/features/groups/providers.dart';
+import 'package:todo_sample_app/features/providers.dart';
 
 class GroupScreen extends ConsumerWidget {
   const GroupScreen({super.key});

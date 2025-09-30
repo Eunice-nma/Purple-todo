@@ -6,8 +6,8 @@ import 'package:todo_sample_app/core/widgets/text_field.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/group_tag.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_sample_app/features/groups/data/models/todo_model.dart';
-import 'package:todo_sample_app/features/groups/providers.dart';
+import 'package:todo_sample_app/features/todo/models/todo_model.dart';
+import 'package:todo_sample_app/features/providers.dart';
 
 /// Bottom sheet widget for adding or editing a Todo item.
 class TodoBottomSheet extends ConsumerStatefulWidget {

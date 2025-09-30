@@ -6,8 +6,8 @@ import 'package:todo_sample_app/core/theme/theme_exports.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
 import 'package:todo_sample_app/core/widgets/button.dart';
 import 'package:todo_sample_app/core/widgets/text_field.dart';
-import 'package:todo_sample_app/features/groups/data/models/grouped_todo_model.dart';
-import 'package:todo_sample_app/features/groups/providers.dart';
+import 'package:todo_sample_app/features/groups/models/grouped_todo_model.dart';
+import 'package:todo_sample_app/features/providers.dart';
 
 class GroupModal extends ConsumerStatefulWidget {
   const GroupModal({this.group, super.key});
