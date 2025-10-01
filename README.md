@@ -23,6 +23,24 @@ This demo focuses features that can be easily tested, such as creating tasks, gr
 
 ---
 
+## What I’d Add with More Time
+
+- Recurring and multi-day tasks: Allow tasks to repeat daily, weekly, or over multiple days.
+
+- Cloud sync / cross-device support: Persist tasks and groups across devices using a backend.
+
+- Trash restore: In case of accidental deleting.
+
+- Task prioritization & sorting: Let users mark priorities and sort tasks by due time or importance.
+
+- Improved UI polish: Add animations, better empty states, and responsive layouts.
+
+- Search & filtering: Allow searching for tasks across groups and filtering by due time or completion status.
+
+These enhancements would make the app more feature-complete and closer to a production-ready product, while keeping the core simplicity and usability intact.
+
+---
+
 ## 📸 Loom video
 https://www.loom.com/share/a9cda58c57174890a2f5ca11cb1e9dd2?t=230&sid=81770f98-cfe7-4ca2-8454-55decd5bd7d4
 
