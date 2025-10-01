@@ -24,10 +24,6 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }
 
   // Adds a new todo and persists the updated list
-  // Future<void> addTodo(Todo todo) async {
-  //   state = [...state, todo];
-  //   await _persist();
-  // }
   Future<String?> addTodo(Todo todo) async {
     if (todo.reminderTime != null) {
       await NotificationService.cancelNotification(todo.id);
@@ -39,7 +35,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       if (error != null) return error; // Return error instead of throwing
     }
 
-    state = [...state, todo];
+    state = [todo, ...state];
     await _persist();
     return null; // Success
   }
@@ -63,35 +59,12 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }
 
   /// Toggles the completion status (`isDone`) of a todo item with the given [id].
-  ///
-  /// This method searches the current list of todos ([state]) for the todo item
-  /// matching the provided [id]. If found, it creates a new `Todo` instance with
-  /// the same properties as the original, but with the `isDone` property inverted.
-  /// All other todos remain unchanged. The updated list replaces the current state.
-  ///
-  /// After updating the state, the method persists the changes by calling [_persist].
   Future<void> toggleTodo(int id) async {
     state = state
         .map((t) => t.id == id ? t.copyWith(isDone: !t.isDone) : t)
         .toList();
     await _persist();
   }
-
-  /// Updates an existing todo by [id] using a [Todo] object with new values.
-  /// Only fields provided in the [updated] object will change.
-  // Future<void> updateTodo(Todo updated) async {
-  //   state = state
-  //       .map((t) => t.id == updated.id
-  //           ? t.copyWith(
-  //               description: updated.description,
-  //               isDone: updated.isDone,
-  //               reminderTime: updated.reminderTime,
-  //               groupId: updated.groupId,
-  //             )
-  //           : t)
-  //       .toList();
-  //   await _persist();
-  // }
 
   /// Deletes a todo item by its [id].
   Future<void> deleteTodo(int id) async {
@@ -104,5 +77,11 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   Future<void> _persist() async {
     final encoded = jsonEncode(state.map((t) => t.toJson()).toList());
     await storage.saveTodoList(encoded);
+  }
+
+  Future<void> clearAll() async {
+    await storage.clearAll();
+    NotificationService.cancelAllNotifications();
+    state = [];
   }
 }

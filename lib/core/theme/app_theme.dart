@@ -5,7 +5,9 @@ import 'package:todo_sample_app/core/theme/app_colors.dart';
 final ThemeData appTheme = ThemeData(
   // Core colors
   primaryColor: AppColors.purple,
-  scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+  scaffoldBackgroundColor: AppColors.whitefe,
+  splashColor: AppColors.purple.withValues(alpha: 0.1),
+  highlightColor: AppColors.purple.withValues(alpha: 0.3),
   fontFamily: GoogleFonts.poppins().fontFamily,
   pageTransitionsTheme: const PageTransitionsTheme(
     builders: {
@@ -19,6 +21,14 @@ final ThemeData appTheme = ThemeData(
     backgroundColor: AppColors.white,
     foregroundColor: AppColors.white,
     elevation: 0,
+  ),
+
+  // IconButton splash/hover/highlight color
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+      overlayColor:
+          WidgetStatePropertyAll(AppColors.purple.withValues(alpha: 0.2)),
+    ),
   ),
 
   // Text Theme mapping

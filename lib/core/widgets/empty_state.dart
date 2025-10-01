@@ -20,7 +20,7 @@ class EmptyState extends StatelessWidget {
             color: AppColors.greyBF,
           ),
           Text(text,
-              style: AppTextStyles.subHeading16w6.copyWith(
+              style: AppTextStyles.subHeading16w7.copyWith(
                 color: AppColors.grey7E,
               )),
         ],

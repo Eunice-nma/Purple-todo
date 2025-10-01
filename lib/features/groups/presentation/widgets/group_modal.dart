@@ -64,32 +64,9 @@ class _GroupModalState extends ConsumerState<GroupModal> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(isEdit ? 'Edit Group' : 'Create New Group',
-                  style: AppTextStyles.subHeading16w6),
-              if (isEdit) ...[
-                const Spacer(),
-                GestureDetector(
-                  onTap: () async {
-                    // Delete the group and close the sheet.
-                    await ref
-                        .read(groupProvider.notifier)
-                        .deleteGroup(currentGroup!.id);
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: const Icon(
-                    Icons.delete_outline_rounded,
-                    color: AppColors.red,
-                    size: 20,
-                  ),
-                ),
-              ],
-            ],
-          ),
+          Text(isEdit ? 'Edit Group' : 'Create New Group',
+              style: AppTextStyles.subHeading16w7),
+
           20.hi,
           AppTextField(
             controller: _nameCtrl,
@@ -103,7 +80,7 @@ class _GroupModalState extends ConsumerState<GroupModal> {
             hintText: "Tasks for the day and meetings",
           ),
           12.hi,
-          Text('Choose Color', style: AppTextStyles.lable11w7),
+          Text('Choose Color', style: AppTextStyles.body13w7),
           6.hi,
           Row(
             children: [
@@ -185,7 +162,7 @@ class _GroupModalState extends ConsumerState<GroupModal> {
             Center(
               child: Text(
                 displayError!,
-                style: AppTextStyles.lable10w6.copyWith(color: AppColors.red),
+                style: AppTextStyles.lable12w5.copyWith(color: AppColors.red),
               ),
             ),
             12.hi,

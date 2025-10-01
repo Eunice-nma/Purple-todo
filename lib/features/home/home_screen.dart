@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
+import 'package:todo_sample_app/features/profile/profile_screen.dart';
 
 import 'package:todo_sample_app/features/todo/presentation/screens/todo_screen.dart';
 import 'package:todo_sample_app/features/groups/presentation/screens/group_screen.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
     TodoScreen(),
     GroupScreen(),
-    Placeholder(),
+    ProfileScreen(),
   ];
 
   @override
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           currentIndex: _currentIndex,
           selectedItemColor: AppColors.purple,
           unselectedItemColor: Colors.grey,
-          unselectedLabelStyle: AppTextStyles.body13w5,
+          unselectedLabelStyle: AppTextStyles.body14w5,
           selectedLabelStyle: AppTextStyles.body13w6,
           onTap: (index) => setState(() => _currentIndex = index),
           items: const [

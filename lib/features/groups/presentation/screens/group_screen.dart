@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
 import 'package:todo_sample_app/core/widgets/app_modal.dart';
+import 'package:todo_sample_app/core/widgets/empty_state.dart';
 import 'package:todo_sample_app/features/groups/presentation/screens/group_todo_screen.dart.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/group_modal.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/grouped_task_widget.dart';
@@ -34,7 +35,7 @@ class GroupScreen extends ConsumerWidget {
                       Text('Grouped Task', style: AppTextStyles.heading24w7),
                       Text(
                         'Organise your task in groups',
-                        style: AppTextStyles.body13w5,
+                        style: AppTextStyles.body14w5,
                       ),
                     ],
                   ),
@@ -58,25 +59,7 @@ class GroupScreen extends ConsumerWidget {
 
               Expanded(
                 child: groups.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'No Groups Yet',
-                              style: AppTextStyles.subHeading16w6.copyWith(
-                                color: AppColors.greyBF,
-                              ),
-                            ),
-                            Text(
-                              'Create groups to organize your tasks',
-                              style: AppTextStyles.body12w4.copyWith(
-                                color: AppColors.grey71,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                    ? EmptyState('No Group Yet')
                     : ListView.separated(
                         itemCount: groups.length,
                         separatorBuilder: (context, index) =>
@@ -114,6 +97,11 @@ class GroupScreen extends ConsumerWidget {
                               bgColor: color,
                               completedTasks: completedTodos,
                               totalTasks: groupTodos.length,
+                              onDelete: () async {
+                                await ref
+                                    .read(groupProvider.notifier)
+                                    .deleteGroup(group.id);
+                              },
                             ),
                           );
                         },

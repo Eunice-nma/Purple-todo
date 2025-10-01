@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
 import 'package:todo_sample_app/core/widgets/button.dart';
+import 'package:todo_sample_app/core/widgets/ios_time_picker_widget.dart';
 import 'package:todo_sample_app/core/widgets/text_field.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/group_tag.dart';
 
@@ -45,25 +49,41 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
   }
 
   /// Opens a time picker dialog and sets the reminder time.
+
+// Now your _pickTime method is much cleaner:
   Future<void> _pickTime(BuildContext context) async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
+    TimeOfDay? picked;
+
+    if (Platform.isIOS) {
+      final result = await showCupertinoModalPopup<DateTime>(
+        context: context,
+        builder: (context) => CupertinoTimePickerModal(
+          initialDateTime: DateTime.now(),
+        ),
+      );
+
+      if (result != null) {
+        picked = TimeOfDay.fromDateTime(result);
+      }
+    } else {
+      picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+    }
 
     if (!mounted) return;
-
     if (picked != null) {
+      final pickedTime = picked;
       final now = DateTime.now();
       final scheduledDate = DateTime(
         now.year,
         now.month,
         now.day,
-        picked.hour,
-        picked.minute,
+        pickedTime.hour,
+        pickedTime.minute,
       );
 
-      // Only allow future times for today.
       if (scheduledDate.isBefore(now)) {
         setState(() {
           displayError = "You can only set a future time today.";
@@ -72,7 +92,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
       }
 
       setState(() {
-        selectedTime = picked;
+        selectedTime = pickedTime;
         displayError = null;
       });
     }
@@ -114,7 +134,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(isEdit ? 'Edit task' : 'Add new task',
-                  style: AppTextStyles.body13w6),
+                  style: AppTextStyles.subHeading16w7.copyWith(height: 1)),
               if (isEdit) ...[
                 const Spacer(),
                 InkWell(
@@ -136,50 +156,48 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
               ],
             ],
           ),
-          12.hi,
+          2.hi,
           // Text field for entering the todo description.
           AppTextField(
             hintText: 'Make something',
             controller: _controller,
           ),
-          20.hi,
+          30.hi,
           // Group selection row with add group button.
-          Row(
-            children: [
-              Text('Group Task', style: AppTextStyles.lable11w7),
-              // const Spacer(),
-              // InkWell(
-              //   onTap: () {
-              //     // Show modal to add a new group.
-              //     showAppDialog(
-              //       context: context,
-              //       child: GroupModal(),
-              //     );
-              //   },
-              //   child: const Icon(Icons.add, color: AppColors.black31),
-              // ),
-            ],
-          ),
-          12.hi,
+          Text('Group Task', style: AppTextStyles.body13w7),
+          8.hi,
           // List of group tags to select from.
-          Wrap(spacing: 12, runSpacing: 12, children: [
-            ...groups.map(
-              (group) => GroupTags(
-                name: group.name,
-                color: Color(group.colorValue),
-                isActive: selectedGroupId == group.id,
-                onTap: () => setState(() {
-                  selectedGroupId =
-                      selectedGroupId == group.id ? null : group.id;
-                }),
-              ),
-            )
-          ]),
-          12.hi,
+          groups.isEmpty
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'No group yet',
+                    style: AppTextStyles.body13w6
+                        .copyWith(color: AppColors.grey7E, height: 1),
+                  ),
+                )
+              : Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    ...groups.map(
+                      (group) => GroupTags(
+                        name: group.name,
+                        color: Color(group.colorValue),
+                        isActive: selectedGroupId == group.id,
+                        onTap: () => setState(() {
+                          selectedGroupId =
+                              selectedGroupId == group.id ? null : group.id;
+                        }),
+                      ),
+                    )
+                  ],
+                ),
+          16.hi,
           // Reminder toggle row.
           Row(
             children: [
-              Text('Remind me', style: AppTextStyles.lable11w7),
+              Text('Remind me', style: AppTextStyles.body13w7),
               const Spacer(),
               InkWell(
                 onTap: () {
@@ -227,7 +245,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
                       selectedTime != null
                           ? selectedTime!.format(context)
                           : '00:00 --',
-                      style: AppTextStyles.lable11w7
+                      style: AppTextStyles.body13w7
                           .copyWith(color: AppColors.purple),
                     ),
                     4.wi,
@@ -242,9 +260,9 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
             8.hi,
             Text(displayError!,
                 style:
-                    AppTextStyles.lable10w5.copyWith(color: Colors.redAccent)),
+                    AppTextStyles.lable12w5.copyWith(color: Colors.redAccent)),
           ],
-          20.hi,
+          40.hi,
           // Done button to save the todo.
           Align(
             alignment: Alignment.centerRight,

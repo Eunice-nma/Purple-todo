@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 import 'package:todo_sample_app/core/utils/utils_exports.dart';
 import 'package:todo_sample_app/core/widgets/app_bottom_sheet.dart';
+import 'package:todo_sample_app/core/widgets/app_modal.dart';
 import 'package:todo_sample_app/core/widgets/empty_state.dart';
+import 'package:todo_sample_app/features/groups/presentation/widgets/group_modal.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/grouped_task_widget.dart';
 import 'package:todo_sample_app/features/todo/presentation/widget/todo_bottom_sheet.dart';
 import 'package:todo_sample_app/features/providers.dart';
@@ -36,15 +38,34 @@ class TodoListScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                  weight: 700,
-                ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      size: 20,
+                      weight: 700,
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () => showAppDialog(
+                      context: context,
+                      child: GroupModal(
+                        group: group,
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.edit,
+                      color: Color.lerp(
+                          Color(group.colorValue), Colors.black, 0.1)!,
+                      size: 18,
+                    ),
+                  )
+                ],
               ),
               20.hi,
               GroupedTaskWidget(
@@ -99,7 +120,11 @@ class TodoListScreen extends ConsumerWidget {
                                   .read(todosProvider.notifier)
                                   .toggleTodo(todo.id);
                             },
-                            onDelete: () {},
+                            onDelete: () {
+                              ref
+                                  .read(todosProvider.notifier)
+                                  .toggleTodo(todo.id);
+                            },
                           );
                         }).toList(),
                       ),
