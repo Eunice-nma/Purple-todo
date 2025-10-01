@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 
 /// Model class representing a Todo item.
 class Todo {
-  /// Unique identifier for the todo.
+  // Unique identifier for the todo.
   final int id;
   final String description;
   final bool isDone;
-
-  /// Optional reminder time for the todo.
+  // Optional reminder time for the todo.
   final TimeOfDay? reminderTime;
-
-  /// Optional group identifier for categorizing todos.
+  // Optional group identifier for categorizing todos.
   final String? groupId;
 
   /// Creates a [Todo] instance.

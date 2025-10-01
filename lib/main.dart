@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_sample_app/core/services/notification_service.dart';
 import 'package:todo_sample_app/core/theme/app_theme.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
-import 'package:todo_sample_app/features/Todo/presentation/screens/home_screen.dart';
-import 'package:todo_sample_app/features/home/home_page.dart';
+import 'package:todo_sample_app/features/splash/splash_screen.dart';
 
 Future<void> main() async {
+  // Ensure widget binding before initializing services
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize notification service
   await NotificationService.init();
   runApp(
     const ProviderScope(
@@ -30,46 +30,10 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           theme: appTheme,
-          home: const HomePage(),
+          home: const SplashScreen(),
           debugShowCheckedModeBanner: false,
         );
       },
-    );
-  }
-}
-
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 800), () {
-        if (!mounted) return;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
-      });
-    });
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: AppColors.black13,
-      body: Center(
-        child: AppAssets.image(
-          'logo.png',
-        ),
-      ),
     );
   }
 }

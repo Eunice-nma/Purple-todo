@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/services/storage_service.dart';
-import 'package:todo_sample_app/features/todos/data/models/grouped_todo_model.dart';
+import 'package:todo_sample_app/features/groups/models/grouped_todo_model.dart';
 import 'dart:convert';
 
 /// StateNotifier to manage the list of groups
@@ -25,7 +25,7 @@ class GroupNotifier extends StateNotifier<List<GroupedTodo>> {
 
   // Adds a new group and persists
   Future<void> addGroup(GroupedTodo group) async {
-    state = [...state, group];
+    state = [group, ...state];
     await _persist();
   }
 
@@ -56,5 +56,10 @@ class GroupNotifier extends StateNotifier<List<GroupedTodo>> {
   Future<void> _persist() async {
     final encoded = jsonEncode(state.map((g) => g.toJson()).toList());
     await storage.saveGroups(encoded);
+  }
+
+  Future<void> clearAll() async {
+    await storage.clearAll();
+    state = [];
   }
 }
