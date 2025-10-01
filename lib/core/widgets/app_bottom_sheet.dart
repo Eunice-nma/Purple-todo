@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
 
+
+/// Shows a customizable bottom sheet with rounded corners.  
+/// Handles keyboard insets automatically and supports scroll control.  
+/// Returns a value of type [T] when the sheet is dismissed. 
 Future<T?> showAppBottomSheet<T>({
   required BuildContext context,
   required Widget child,

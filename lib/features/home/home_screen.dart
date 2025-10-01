@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
+  /// List of Screens on the Home tab
   final List<Widget> _pages = [
     TodoScreen(),
     GroupScreen(),
@@ -26,22 +27,25 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: SizedBox(
-        height: 100, // Adjust the height as needed
+        height: 110,
         child: BottomNavigationBar(
           backgroundColor: AppColors.whitefe,
           currentIndex: _currentIndex,
-          selectedItemColor: AppColors.purple,
+          selectedItemColor: AppColors.primaryColor,
           unselectedItemColor: Colors.grey,
           unselectedLabelStyle: AppTextStyles.body14w5,
           selectedLabelStyle: AppTextStyles.body13w6,
           onTap: (index) => setState(() => _currentIndex = index),
+          // Tabs and Icons
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.check_circle_outline),
               label: 'Todos',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.group_outlined),
+              icon: Icon(
+                Icons.category_outlined,
+              ),
               label: 'Groups',
             ),
             BottomNavigationBarItem(

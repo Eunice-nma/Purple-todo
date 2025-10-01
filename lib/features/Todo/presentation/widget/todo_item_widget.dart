@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
+import 'package:todo_sample_app/core/widgets/check_circle.dart';
 import 'package:todo_sample_app/features/todo/models/todo_model.dart';
 
 class TodoItemWidget extends StatelessWidget {
@@ -22,8 +23,8 @@ class TodoItemWidget extends StatelessWidget {
   });
 
   Color get borderColor => useGroupStyle
-      ? (groupColor ?? AppColors.lightPurple)
-      : AppColors.lightPurple;
+      ? (groupColor ?? AppColors.lightPrimary)
+      : AppColors.lightPrimary;
 
   @override
   Widget build(BuildContext context) {
@@ -31,23 +32,24 @@ class TodoItemWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Dismissible(
         key: ValueKey(task.id),
-  direction: DismissDirection.endToStart, // 👈 only allow right-to-left
-  background: ClipRRect(
-    borderRadius: BorderRadius.circular(15),
-    child: Container(
-      alignment: Alignment.centerRight,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      color: AppColors.lightRed,
-      child: const Icon(Icons.delete_outline_rounded, color: Colors.white),
-    ),
-  ),
-  onDismissed: (direction) {
-    if (direction == DismissDirection.endToStart) {
-      onDelete();
-    }
-  },
+        direction: DismissDirection.endToStart,
+        background: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            color: AppColors.lightRed,
+            child:
+                const Icon(Icons.delete_outline_rounded, color: Colors.white),
+          ),
+        ),
+        onDismissed: (direction) {
+          // Delete todo on swipe from Right to Left
+          if (direction == DismissDirection.endToStart) {
+            onDelete();
+          }
+        },
         child: Container(
-          // margin: const EdgeInsets.symmetric(vertical: 4),
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6),
           width: double.infinity,
           constraints: const BoxConstraints(
@@ -60,7 +62,6 @@ class TodoItemWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // Make only the text area tappable
               Expanded(
                 child: InkWell(
                   onTap: onTap,
@@ -123,25 +124,11 @@ class TodoItemWidget extends StatelessWidget {
                 ),
               ),
               12.wi,
-              InkWell(
+              CheckCircle(
+                isChecked: task.isDone,
                 onTap: onToggle,
-                child: Container(
-                  height: 24,
-                  width: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: task.isDone ? borderColor : Colors.transparent,
-                    border: Border.all(color: borderColor, width: 2),
-                  ),
-                  child: task.isDone
-                      ? Icon(
-                          Icons.check,
-                          color: Colors.white,
-                          size: 16,
-                        )
-                      : null,
-                ),
-              ),
+                activeColor: borderColor,
+              )
             ],
           ),
         ),

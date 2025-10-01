@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
 
+/// A customizable text field with label, hint, and styles.
+/// Wraps Flutter’s TextField with consistent app theming.
+/// Supports multiline input, borders, and color overrides.
 class AppTextField extends StatelessWidget {
   final String? hintText;
   final String? labelText;
@@ -53,20 +56,20 @@ class AppTextField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: borderColor ?? AppColors.lightPurple,
+                color: borderColor ?? AppColors.lightPrimary,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: borderColor ?? AppColors.lightPurple,
+                color: borderColor ?? AppColors.lightPrimary,
                 width: 1.5,
               ),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: borderColor ?? AppColors.lightPurple,
+                color: borderColor ?? AppColors.lightPrimary,
               ),
             ),
           ),

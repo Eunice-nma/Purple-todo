@@ -3,12 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_sample_app/core/theme/app_colors.dart';
 
 final ThemeData appTheme = ThemeData(
+
   // Core colors
-  primaryColor: AppColors.purple,
+  primaryColor: AppColors.primaryColor,
   scaffoldBackgroundColor: AppColors.whitefe,
-  splashColor: AppColors.purple.withValues(alpha: 0.1),
-  highlightColor: AppColors.purple.withValues(alpha: 0.3),
+  splashColor: AppColors.primaryColor.withValues(alpha: 0.1),
+  highlightColor: AppColors.primaryColor.withValues(alpha: 0.3),
   fontFamily: GoogleFonts.poppins().fontFamily,
+
+  // Page transition
   pageTransitionsTheme: const PageTransitionsTheme(
     builders: {
       TargetPlatform.android: FadePageTransitionsBuilder(),
@@ -27,30 +30,12 @@ final ThemeData appTheme = ThemeData(
   iconButtonTheme: IconButtonThemeData(
     style: ButtonStyle(
       overlayColor:
-          WidgetStatePropertyAll(AppColors.purple.withValues(alpha: 0.2)),
+          WidgetStatePropertyAll(AppColors.primaryColor.withValues(alpha: 0.2)),
     ),
   ),
-
-  // Text Theme mapping
-  // textTheme: const TextTheme(
-  //   displayLarge: AppTextStyles.displayLarge,
-  //   displayMedium: AppTextStyles.displayMedium,
-  //   displaySmall: AppTextStyles.displaySmall,
-  //   // headlineLarge: AppTextStyles.headlineLarge,
-  //   // headlineMedium: AppTextStyles.headlineMedium,
-  //   // headlineSmall: AppTextStyles.headlineSmall,
-  //   // titleLarge: AppTextStyles.titleLarge,
-  //   // titleMedium: AppTextStyles.titleMedium,
-  //   // titleSmall: AppTextStyles.titleSmall,
-  //   // bodyLarge: AppTextStyles.bodyLarge,
-  //   // bodyMedium: AppTextStyles.bodyMedium,
-  //   // bodySmall: AppTextStyles.bodySmall,
-  //   // labelLarge: AppTextStyles.labelLarge,
-  //   // labelMedium: AppTextStyles.labelMedium,
-  //   // labelSmall: AppTextStyles.labelSmall,
-  // ),
 );
 
+// Fade trasition on screens
 class FadePageTransitionsBuilder extends PageTransitionsBuilder {
   const FadePageTransitionsBuilder();
 

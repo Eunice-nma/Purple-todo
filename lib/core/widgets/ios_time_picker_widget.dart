@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
-// Create a separate widget file or add to the same file
+
+/// A Cupertino-style bottom sheet time picker modal.
+/// Lets users select a time with Cancel/Done actions.
+/// Returns the chosen DateTime when confirmed.
 class CupertinoTimePickerModal extends StatelessWidget {
   final DateTime initialDateTime;
 

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
+// import 'package:todo_sample_app/core/utils/utils_exports.dart';
 import 'package:todo_sample_app/core/widgets/button.dart';
+import 'package:todo_sample_app/core/widgets/check_circle.dart';
 import 'package:todo_sample_app/core/widgets/ios_time_picker_widget.dart';
 import 'package:todo_sample_app/core/widgets/text_field.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/group_tag.dart';
@@ -17,7 +19,7 @@ import 'package:todo_sample_app/features/providers.dart';
 class TodoBottomSheet extends ConsumerStatefulWidget {
   const TodoBottomSheet({this.todo, this.predefinedGroupId, super.key});
   final Todo? todo; // If not null, this is an edit operation.
-  final String? predefinedGroupId;
+  final String? predefinedGroupId; // Specify a group to be selected
 
   @override
   ConsumerState<TodoBottomSheet> createState() => _TodoBottomSheetState();
@@ -49,11 +51,10 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
   }
 
   /// Opens a time picker dialog and sets the reminder time.
-
-// Now your _pickTime method is much cleaner:
   Future<void> _pickTime(BuildContext context) async {
     TimeOfDay? picked;
 
+    // Check device OS to use appropriate time picker
     if (Platform.isIOS) {
       final result = await showCupertinoModalPopup<DateTime>(
         context: context,
@@ -66,6 +67,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
         picked = TimeOfDay.fromDateTime(result);
       }
     } else {
+      // Android time picker
       picked = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
@@ -76,6 +78,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
     if (picked != null) {
       final pickedTime = picked;
       final now = DateTime.now();
+      // Fix selected time into current date
       final scheduledDate = DateTime(
         now.year,
         now.month,
@@ -84,6 +87,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
         pickedTime.minute,
       );
 
+      // Check that time is in the future
       if (scheduledDate.isBefore(now)) {
         setState(() {
           displayError = "You can only set a future time today.";
@@ -105,6 +109,45 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
   }
 
   String? selectedGroupId; // The selected group for the todo.
+
+  void _deleteTodo(BuildContext ctx) async {
+    await ref.read(todosProvider.notifier).deleteTodo(currentTodo!.id);
+    if (context.mounted) {
+      Navigator.of(ctx).pop();
+    }
+  }
+
+  void _handleSave(BuildContext ctx) async {
+    final task = _controller.text.trim();
+    if (task.isEmpty) {
+      setState(() => displayError = "Task cannot be empty");
+      return;
+    }
+
+    // Create or update the todo object.
+    final todo = isEdit
+        ? currentTodo!.copyWith(
+            description: task,
+            groupId: selectedGroupId,
+            reminderTime: setReminder ? selectedTime : null)
+        : Todo(
+            id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+            description: task,
+            isDone: false,
+            reminderTime: setReminder ? selectedTime : null,
+            groupId: selectedGroupId);
+
+    // Save the todo and handle errors.
+    final error = isEdit
+        ? await ref.read(todosProvider.notifier).updateTodo(todo)
+        : await ref.read(todosProvider.notifier).addTodo(todo);
+
+    if (error != null) {
+      setState(() => displayError = error);
+    } else if (context.mounted) {
+      Navigator.of(ctx).pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,15 +181,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
               if (isEdit) ...[
                 const Spacer(),
                 InkWell(
-                  onTap: () async {
-                    // Delete the todo and close the sheet.
-                    await ref
-                        .read(todosProvider.notifier)
-                        .deleteTodo(currentTodo!.id);
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                    }
-                  },
+                  onTap: () => _deleteTodo(context),
                   child: const Icon(
                     Icons.delete_outline_rounded,
                     size: 20,
@@ -199,7 +234,9 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
             children: [
               Text('Remind me', style: AppTextStyles.body13w7),
               const Spacer(),
-              InkWell(
+              CheckCircle(
+                isChecked: setReminder,
+                activeColor: AppColors.lightPrimary,
                 onTap: () {
                   setState(() {
                     setReminder = !setReminder;
@@ -209,20 +246,6 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
                     }
                   });
                 },
-                child: Container(
-                  height: 24,
-                  width: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: setReminder
-                        ? AppColors.lightPurple
-                        : Colors.transparent,
-                    border: Border.all(color: AppColors.lightPurple, width: 2),
-                  ),
-                  child: setReminder
-                      ? const Icon(Icons.check, color: Colors.white, size: 16)
-                      : null,
-                ),
               ),
             ],
           ),
@@ -235,7 +258,7 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.lightPurple, width: 1.5),
+                  border: Border.all(color: AppColors.lightPrimary, width: 1.5),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -246,10 +269,10 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
                           ? selectedTime!.format(context)
                           : '00:00 --',
                       style: AppTextStyles.body13w7
-                          .copyWith(color: AppColors.purple),
+                          .copyWith(color: AppColors.primaryColor),
                     ),
                     4.wi,
-                    const Icon(Icons.alarm, color: AppColors.purple, size: 16),
+                    const Icon(Icons.alarm, color: AppColors.primaryColor, size: 16),
                   ],
                 ),
               ),
@@ -258,46 +281,19 @@ class _TodoBottomSheetState extends ConsumerState<TodoBottomSheet> {
           // Error message display.
           if (displayError != null) ...[
             8.hi,
-            Text(displayError!,
-                style:
-                    AppTextStyles.lable12w5.copyWith(color: Colors.redAccent)),
+            Text(
+              displayError!,
+              style: AppTextStyles.lable12w5.copyWith(color: Colors.redAccent),
+            ),
           ],
           40.hi,
           // Done button to save the todo.
           Align(
             alignment: Alignment.centerRight,
-            child: Button('Done', onTap: () async {
-              final task = _controller.text.trim();
-              if (task.isEmpty) {
-                setState(() => displayError = "Task cannot be empty");
-                return;
-              }
-
-              // Create or update the todo object.
-              final todo = isEdit
-                  ? currentTodo!.copyWith(
-                      description: task,
-                      groupId: selectedGroupId,
-                      reminderTime: setReminder ? selectedTime : null)
-                  : Todo(
-                      id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
-                      description: task,
-                      isDone: false,
-                      reminderTime: setReminder ? selectedTime : null,
-                      groupId: selectedGroupId);
-
-              // Save the todo and handle errors.
-              final error = isEdit
-                  ? await ref.read(todosProvider.notifier).updateTodo(todo,
-                      timeChanged: selectedTime != currentTodo!.reminderTime)
-                  : await ref.read(todosProvider.notifier).addTodo(todo);
-
-              if (error != null) {
-                setState(() => displayError = error);
-              } else if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            }),
+            child: Button(
+              'Done',
+              onTap: () => _handleSave(context),
+            ),
           ),
           40.hi,
         ],

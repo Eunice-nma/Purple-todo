@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Displays a customizable dialog with rounded corners.
+/// Supports background color, padding, and dismiss behavior.
+/// Returns a value of type [T] when the dialog is closed.
 Future<T?> showAppDialog<T>({
   required BuildContext context,
   required Widget child,

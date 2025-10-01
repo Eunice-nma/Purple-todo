@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
 import 'package:todo_sample_app/features/home/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,11 +14,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 1000), () {
+      // Less than a second delay to show App name and tagline
+      Future.delayed(Duration(milliseconds: 850), () {
         if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
         );
       });
     });
@@ -29,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.purple,
+      backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

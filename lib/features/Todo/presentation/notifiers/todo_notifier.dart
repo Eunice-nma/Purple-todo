@@ -32,7 +32,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         body: todo.description,
         scheduledTime: todo.reminderTime!,
       );
-      if (error != null) return error; // Return error instead of throwing
+      if (error != null) return error; // Return error
     }
 
     state = [todo, ...state];
@@ -40,19 +40,44 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     return null; // Success
   }
 
-  Future<String?> updateTodo(Todo updated, {bool timeChanged = false}) async {
-    if (updated.reminderTime != null && timeChanged) {
+  Future<String?> updateTodo(
+    Todo updated,
+  ) async {
+    /// Handle reminder
+    ///
+    /// Always attempt to cancel reminder if the update does not have a [reminderTime]
+    if (updated.reminderTime == null) {
       await NotificationService.cancelNotification(updated.id);
-      final error = await NotificationService.scheduleNotification(
-        id: updated.id,
-        body: updated.description,
-        scheduledTime: updated.reminderTime!,
-      );
-      if (error != null) return error;
     } else {
-      await NotificationService.cancelNotification(updated.id);
+      // Check for current time
+      final now = DateTime.now();
+      final scheduledDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        updated.reminderTime!.hour,
+        updated.reminderTime!.minute,
+      );
+
+      // Reschedule with updated information if reminder is still in the future
+      if (scheduledDateTime.isAfter(now)) {
+        await NotificationService.cancelNotification(updated.id);
+
+        // Await for any error that may handle during [scheduleNotification]
+        final error = await NotificationService.scheduleNotification(
+          id: updated.id,
+          body: updated.description,
+          scheduledTime: updated.reminderTime!,
+        );
+
+        if (error != null) return error;
+      } else {
+        // Cancel Reminders that are past
+        await NotificationService.cancelNotification(updated.id);
+      }
     }
 
+    // Update state
     state = state.map((t) => t.id == updated.id ? updated : t).toList();
     await _persist();
     return null;
@@ -73,12 +98,14 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     await _persist();
   }
 
-  // Persists the current state of todos to storage
+  /// Persists the current state of todos to storage
   Future<void> _persist() async {
     final encoded = jsonEncode(state.map((t) => t.toJson()).toList());
     await storage.saveTodoList(encoded);
   }
 
+  /// Delete all stored Todos and cancel any available Notifications
+  /// Clear immediate app state
   Future<void> clearAll() async {
     await storage.clearAll();
     NotificationService.cancelAllNotifications();

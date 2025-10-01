@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
 import 'package:todo_sample_app/core/widgets/app_bottom_sheet.dart';
 import 'package:todo_sample_app/core/widgets/empty_state.dart';
 import 'package:todo_sample_app/features/groups/presentation/widgets/grouped_task_widget.dart';
@@ -9,7 +9,7 @@ import 'package:todo_sample_app/features/todo/presentation/widget/todo_bottom_sh
 import 'package:todo_sample_app/features/todo/presentation/widget/todo_item_widget.dart';
 import 'package:todo_sample_app/features/providers.dart';
 
-// Main screen widget for displaying and managing todos
+/// Main screen widget for displaying and managing todos
 class TodoScreen extends ConsumerWidget {
   const TodoScreen({super.key});
 
@@ -49,7 +49,6 @@ class TodoScreen extends ConsumerWidget {
         todoList.isEmpty ? 0 : completedCount / todoList.length;
 
     return Scaffold(
-      backgroundColor: AppColors.whitefe,
       resizeToAvoidBottomInset:
           true, // This makes the UI move up when keyboard appears
       body: SafeArea(
@@ -79,7 +78,7 @@ class TodoScreen extends ConsumerWidget {
               GroupedTaskWidget(
                 text: getHeaderText(progress),
                 subText: todoList.isEmpty ? '' : 'Overall progress for the day',
-                bgColor: AppColors.purple,
+                bgColor: AppColors.primaryColor,
                 completedTasks: completedCount,
                 totalTasks: todoList.length,
                 height: 120,
@@ -102,7 +101,7 @@ class TodoScreen extends ConsumerWidget {
                     ),
                     icon: Icon(
                       Icons.add,
-                      color: AppColors.purple,
+                      color: AppColors.primaryColor,
                       size: 24,
                       weight: 900,
                     ),

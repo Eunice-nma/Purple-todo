@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
 import 'package:todo_sample_app/features/providers.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -21,7 +21,7 @@ class ProfileScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   CircleAvatar(
-                    backgroundColor: AppColors.lightPurple,
+                    backgroundColor: AppColors.lightPrimary,
                     radius: 32,
                   ),
                   Text(
@@ -35,7 +35,7 @@ class ProfileScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.lightPurple),
+                  border: Border.all(color: AppColors.lightPrimary),
                   borderRadius: BorderRadius.circular(12)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

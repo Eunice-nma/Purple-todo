@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
 import 'package:todo_sample_app/core/widgets/app_bottom_sheet.dart';
 import 'package:todo_sample_app/core/widgets/app_modal.dart';
 import 'package:todo_sample_app/core/widgets/empty_state.dart';
@@ -11,8 +11,8 @@ import 'package:todo_sample_app/features/todo/presentation/widget/todo_bottom_sh
 import 'package:todo_sample_app/features/providers.dart';
 import 'package:todo_sample_app/features/todo/presentation/widget/todo_item_widget.dart';
 
-class TodoListScreen extends ConsumerWidget {
-  const TodoListScreen(this.groupId, {super.key});
+class GroupTodoListScreen extends ConsumerWidget {
+  const GroupTodoListScreen(this.groupId, {super.key});
   final String groupId;
 
   @override

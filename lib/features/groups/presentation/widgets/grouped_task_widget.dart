@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sample_app/core/theme/theme_exports.dart';
-import 'package:todo_sample_app/core/utils/utils_exports.dart';
+import 'package:todo_sample_app/core/utils/responsive_extensions.dart';
 
 class GroupedTaskWidget extends StatelessWidget {
   const GroupedTaskWidget({

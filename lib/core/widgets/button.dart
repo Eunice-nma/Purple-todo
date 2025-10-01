@@ -14,26 +14,23 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return TextButton(
+      onPressed: onTap,
+      style: TextButton.styleFrom(
+        backgroundColor: color ?? AppColors.primaryColor,
+        foregroundColor: AppColors.whitefe,
         padding: const EdgeInsets.all(8),
-        width: 96,
-        height: 38,
-        decoration: BoxDecoration(
-          color: color ?? AppColors.purple,
+        minimumSize: const Size(96, 38),
+        maximumSize: const Size(96, 38),
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: AppTextStyles.body13w7.copyWith(
-                color: AppColors.whitefe,
-              ),
-            ),
-          ],
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      child: Text(
+        text,
+        style: AppTextStyles.body13w7.copyWith(
+          color: AppColors.whitefe,
         ),
       ),
     );

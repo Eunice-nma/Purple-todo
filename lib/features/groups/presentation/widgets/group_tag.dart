@@ -35,7 +35,6 @@ class GroupTags extends StatelessWidget {
           name,
           style: AppTextStyles.lable12w5.copyWith(color: AppColors.darkPurple),
         ),
-        // ),
       ),
     );
   }

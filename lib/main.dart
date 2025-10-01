@@ -6,8 +6,10 @@ import 'package:todo_sample_app/core/theme/app_theme.dart';
 import 'package:todo_sample_app/features/splash/splash_screen.dart';
 
 Future<void> main() async {
+  // Ensure widget binding before initializing services
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize notification service
   await NotificationService.init();
   runApp(
     const ProviderScope(
