@@ -1,16 +1,54 @@
-# todo_sample_app
+# Porple - Todo & Group Task App ✅
 
-A new Flutter project.
+Porple is a simple yet powerful Flutter app for managing your daily tasks.
+You can organize your tasks into groups, set reminders, and track your tasks easily.
 
-## Getting Started
+## Essentials
+- Daily Focus: Porple focuses on tasks for the current day, helping you prioritize what matters now.
+- Future Reminders Only: You can set reminders, but only for future times within the day, ensuring notifications are relevant and actionable.
+- Group Management: Organize tasks into groups to stay structured and efficient.
 
-This project is a starting point for a Flutter application.
+This demo focuses features that can be easily tested, such as creating tasks, grouping them, and setting reminders that are within the current day.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🚀 Features
+- Create and edit task groups
+- Add and edit tasks with reminders
+- Mark tasks as done
+- Swipe to delete tasks
+- Long press to edit groups
+- Color-code your groups
+- Works on iOS & Android
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 📸 Loom video
+https://www.loom.com/share/a9cda58c57174890a2f5ca11cb1e9dd2?t=230&sid=81770f98-cfe7-4ca2-8454-55decd5bd7d4
+
+---
+
+## 🛠 Installation
+Clone the repository and run:
+
+```bash
+git clone https://github.com/Eunice-nma/Purple-todo.git
+cd todo_sample_app
+flutter pub get
+flutter run
+
+📂 Project Structure
+lib/
+ ├─ core/              # Constants, theme, utils
+ │   ├─ services/      # NotificationService, StorageService
+ │   └─ theme/         # Colors, text styles
+ │   └─ utils/         # Helper classes
+ │   └─ Widgets/       # Reuseable widgets
+ ├─ features/
+ │   ├─ groups/        # Group screens, modals, GroupNotifier
+ │   ├─ tasks/         # Task screens, TodoNotifier
+ │   └─ home/          # Home screen
+ └─ main.dart
+
+📄 License
+MIT License © 2025 Nma Ndidi
